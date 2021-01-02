@@ -1,27 +1,33 @@
 package com.springboot.validation.model;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
-
-/**
- * @author Mohammed Amr
- * @created 02/01/2021 - 15:35
- * @project spring-boot-validation
- */
 public class User {
 
-    @NotBlank(message = "username cannot be empty!")
+    @NotBlank(message = "username cannot be empty")
     private String name;
 
-    @NotBlank(message = "password cannot be empty!")
+    @NotBlank(message = "password cannot be empty")
+    @Length(min=6, max=10, message="length of password should between 6 and 10 characters")
     private String password;
 
+    @Min(value=0)
+    @Max(value=100)
     private Double grade;
 
-    public User(@NotBlank(message = "username cannot be empty!") String name, @NotBlank(message = "password cannot be empty!") String password, Double grade) {
+    @Email
+    private String email;
+
+    public User(String name, String password, Double grade, String email) {
         this.name = name;
         this.password = password;
         this.grade = grade;
+        this.email = email;
     }
 
     public String getName() {
@@ -46,5 +52,13 @@ public class User {
 
     public void setGrade(Double grade) {
         this.grade = grade;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
